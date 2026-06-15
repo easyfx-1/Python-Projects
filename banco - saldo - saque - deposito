@@ -1,0 +1,40 @@
+saldo = 0
+
+while True:
+    print('1 - Saldo')
+    print('2 - Depositar')
+    print('3 - Sacar')
+    print('4 - Sair')
+    
+    #SALDO
+    escolha = input('Digite o que deseja: ')
+    if escolha == '1':
+        print(f'Seu saldo é {saldo}')
+   
+    #DEPÓSITO
+    elif escolha == '2':
+        deposito = int(input('Digite o valor que deseja depositar: '))
+        if deposito <= 0:
+             print('Valor inválido')
+        else:
+             saldo += deposito
+             print(f'Depósito realizado. Saldo atual: {saldo}') 
+    
+    #SAQUE
+    elif escolha == '3':
+        saque = int(input('Digite o valor que deseja sacar: '))
+        if saque <= 0:
+            print('valor inválido')
+        elif saque <= saldo:
+             saldo -= saque
+             print(f'Saque realizado. Saldo atual: {saldo}')
+        else:
+            print('Saldo insuficiente')
+    
+    #SAINDO DO SISTEMA
+    elif escolha == '4':
+            print('Saindo do sistema...')
+            break
+    
+    else:
+         print('Opção inválida')
