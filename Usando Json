@@ -1,0 +1,64 @@
+import json
+
+class Padaria:
+    def __init__(self):
+        self.cardapio = {}
+        self.pedidos = {}
+
+    def bem_vindo(self):
+        print('Bem vindo a Padaria Shalom')
+
+    def exibir_menu(self):
+        with open('padariazinha.json', 'r', encoding='utf-8') as arquivo:
+            self.cardapio = json.load(arquivo)
+        
+            for produto, valor in self.cardapio.items():
+                print(produto, valor)
+            
+
+    def escolher_pedido(self):
+        pedido = input('Qual seu pedido: ')
+        if pedido in self.cardapio:
+            if pedido in self.pedidos:
+                self.pedidos[pedido] +=1
+            else:
+                self.pedidos[pedido] = 1
+        else:
+            print('Desculpe, não temos!')
+    
+    def carrinho(self):
+        total = 0
+
+        for produto, quantidade in self.pedidos.items():
+            preco = self.cardapio[produto]
+            subtotal = preco * quantidade
+            total += subtotal
+
+            print(f"{produto} x {quantidade} = R$ {subtotal:.2f}")
+        
+        print(f'TOTAL: R$ {total:.2f}')
+
+
+padaria = Padaria()
+
+padaria.bem_vindo()
+padaria.exibir_menu()
+while True:
+    padaria.escolher_pedido()
+
+    continuar = input('Deseja continuar comprando: ')
+    if continuar.lower() != 's':
+        break
+
+
+padaria.carrinho()
+
+
+#arquivo Json
+# {
+    "pao frances": 1.00,
+    "pao de queijo": 3.50,
+    "café": 4.00,
+    "coca": 6.45
+ 
+}
