@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+
+import requests
+import re
+import socket
+from urllib.parse import urlparse
+
+
+url = input("Digite a URL: ")
+
+print(f"\n[+] Baixando HTML de {url}...\n")
+
+try:
+    resposta = requests.get(url, timeout=10)
+    html = resposta.text
+
+except Exception as erro:
+    print(f"Erro: {erro}")
+    exit()
+
+
+print(f"{'DOMÍNIO':<35} IP")
+print("-" * 50)
+
+
+# Extrai URLs do HTML
+links = re.findall(r'https?://[a-zA-Z0-9.-]+', html)
+
+
+# Remove duplicados
+dominios = set()
+
+for link in links:
+    dominio = urlparse(link).netloc
+    dominios.add(dominio)
+
+
+# Resolve IP
+for dominio in dominios:
+    try:
+        ip = socket.gethostbyname(dominio)
+        print(f"{dominio:<35} {ip}")
+
+    except socket.gaierror:
+        print(f"{dominio:<35} Não resolvido")
